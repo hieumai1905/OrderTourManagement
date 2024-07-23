@@ -8,8 +8,8 @@ public class SessionController extends ApplicationController {
         super(context);
         setActionListener();
     }
-    
-    private void setActionListener(){
-        
+
+    private void setActionListener() {
+
     }
 }

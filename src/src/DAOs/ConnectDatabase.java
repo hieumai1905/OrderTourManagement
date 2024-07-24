@@ -10,8 +10,8 @@ public class ConnectDatabase {
 
     private static Connection instance = null;
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "123456";
-    private static final String SERVER = "localhost";
+    private static final String PASSWORD = "119905";
+    private static final String SERVER = "DESKTOP-2I99FT2\\SQLEXPRESS";
     private static final String PORT = "1433";
     private static final String DATABASE_NAME = "QUAN_LY_TOUR_DU_LICH";
     private static final boolean USING_SSL = true;

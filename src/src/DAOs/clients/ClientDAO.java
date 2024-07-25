@@ -31,9 +31,9 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public boolean add(Client client) {
-        String query = "INSERT INTO clients (name, age, gender, email, phone, address) "
+        String query = "INSERT INTO clients (name, gender, email, phone, address) "
                 + "VALUES (?, ?, ?, ?, ?)";
-        return executeUpdate(query, client.getName(), client.getAge(), client.isGender(), client.getEmail(),
+        return executeUpdate(query, client.getName(), client.isGender(), client.getEmail(),
                 client.getPhone(),
                 client.getAddress()
         );
@@ -41,9 +41,9 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public boolean update(Client client) {
-        String query = "UPDATE clients SET name = ?, age = ?, gender = ?, email = ?, phone = ?, address = ? "
+        String query = "UPDATE clients SET name = ?, gender = ?, email = ?, phone = ?, address = ? "
                 + "WHERE client_id = ?";
-        return executeUpdate(query, client.getName(), client.getAge(), client.isGender(), client.getEmail(),
+        return executeUpdate(query, client.getName(), client.isGender(), client.getEmail(),
                 client.getPhone(), client.getAddress(), client.getClientId());
     }
 
@@ -92,7 +92,6 @@ public class ClientDAO implements IClientDAO {
         Client client = new Client();
         client.setClientId(resultSet.getInt("client_id"));
         client.setName(resultSet.getString("name"));
-        client.setAge(resultSet.getInt("age"));
         client.setGender(resultSet.getBoolean("gender"));
         client.setEmail(resultSet.getString("email"));
         client.setPhone(resultSet.getString("phone"));

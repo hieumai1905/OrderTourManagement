@@ -1,12 +1,11 @@
 package src.models;
 
-
 public class TourGuide {
 
     private int tourGuideId;
     private String name;
     private String phone;
-    private String experience;
+    private String address;
     private int age;
     private boolean gender;
 
@@ -34,12 +33,12 @@ public class TourGuide {
         this.phone = phone;
     }
 
-    public String getExperience() {
-        return experience;
+    public String getAddress() {
+        return address;
     }
 
-    public void setExperience(String experience) {
-        this.experience = experience;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getAge() {

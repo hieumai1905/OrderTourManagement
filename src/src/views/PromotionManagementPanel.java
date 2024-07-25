@@ -1,6 +1,8 @@
 package src.views;
 
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.DAOs.promotions.IPromotionDAO;
 import src.DAOs.promotions.PromotionDAO;
@@ -11,6 +13,8 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
     private List<Promotion> promotions;
 
     private IPromotionDAO promotionDAO;
+
+    private int selectedRowIndex = -1;
 
     public PromotionManagementPanel() {
         initComponents();
@@ -33,9 +37,7 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                 promotion.getDiscountRate(),
                 promotion.getStartAt(),
                 promotion.getEndAt(),
-                promotion.getDiscountRate(),
-                promotion.getQuantity()
-            };
+                promotion.getQuantity(),};
             model.addRow(row);
         }
     }
@@ -56,14 +58,14 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jTextField3 = new javax.swing.JTextField();
+        txtDiscountCode = new javax.swing.JTextField();
+        dateStart = new com.toedter.calendar.JDateChooser();
+        dateEnd = new com.toedter.calendar.JDateChooser();
+        txtDiscountRate = new javax.swing.JTextField();
+        txtQuantity = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtSearchPromotion = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
@@ -73,10 +75,10 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
         tablePromotions = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnDeletePromotion = new javax.swing.JButton();
+        btnAddPromotion = new javax.swing.JButton();
+        btnUpdatePromotion = new javax.swing.JButton();
+        btnRefreshPromotion = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -147,7 +149,7 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -157,11 +159,11 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(235, 227, 227));
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtDiscountCode.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jSpinner1.setPreferredSize(new java.awt.Dimension(64, 25));
+        txtDiscountRate.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jTextField3.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtQuantity.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -170,27 +172,27 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDiscountCode, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateStart, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDiscountRate, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDiscountCode, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDiscountRate, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -212,14 +214,11 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(235, 227, 227));
@@ -227,7 +226,7 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel15.setText("Lọc và tìm kiếm");
 
-        jTextField8.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtSearchPromotion.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
         jButton1.setText("Tìm kiếm");
 
@@ -246,7 +245,7 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearchPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -272,7 +271,7 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSearchPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,6 +306,11 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablePromotions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePromotionsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePromotions);
 
         jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
@@ -314,20 +318,40 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton2.setText("Xoá");
-        jButton2.setEnabled(false);
+        btnDeletePromotion.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnDeletePromotion.setText("Xoá");
+        btnDeletePromotion.setEnabled(false);
+        btnDeletePromotion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePromotionActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton3.setText("Thêm");
+        btnAddPromotion.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnAddPromotion.setText("Thêm");
+        btnAddPromotion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPromotionActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton4.setText("Cập nhật");
-        jButton4.setEnabled(false);
-        jButton4.setPreferredSize(new java.awt.Dimension(72, 27));
+        btnUpdatePromotion.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnUpdatePromotion.setText("Cập nhật");
+        btnUpdatePromotion.setEnabled(false);
+        btnUpdatePromotion.setPreferredSize(new java.awt.Dimension(72, 27));
+        btnUpdatePromotion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdatePromotionActionPerformed(evt);
+            }
+        });
 
-        jButton5.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton5.setText("Làm mới");
+        btnRefreshPromotion.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnRefreshPromotion.setText("Làm mới");
+        btnRefreshPromotion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshPromotionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -337,24 +361,24 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDeletePromotion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUpdatePromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnRefreshPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRefreshPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddPromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpdatePromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDeletePromotion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -382,9 +406,9 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -413,15 +437,207 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRefreshPromotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPromotionActionPerformed
+        resetForm();
+        loadData();
+    }//GEN-LAST:event_btnRefreshPromotionActionPerformed
+
+    private void btnAddPromotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPromotionActionPerformed
+        String discountCode = txtDiscountCode.getText();
+        String quantity = txtQuantity.getText();
+        String discountRateStr = txtDiscountRate.getText();
+        Date startDate = dateStart.getDate();
+        Date endDate = dateEnd.getDate();
+
+        if (discountCode.isEmpty() || discountRateStr.isEmpty() || startDate == null || endDate == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khuyến mãi.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int discountRate = 1;
+        int quantityValue = 1;
+        try {
+            quantityValue = Integer.parseInt(quantity);
+            discountRate = Integer.parseInt(discountRateStr);
+            if (discountRate < 1 || discountRate > 99) {
+                JOptionPane.showMessageDialog(this, "Tỷ lệ giảm giá phải từ 1% đến 99%.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                txtDiscountCode.requestFocus();
+                return;
+            }
+            if (quantityValue < 1) {
+                JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 1", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                txtQuantity.requestFocus();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Tỷ lệ và số lượng phải là số", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Promotion newPromotion = new Promotion();
+        newPromotion.setDiscountCode(discountCode);
+        newPromotion.setDiscountRate(discountRate);
+        newPromotion.setQuantity(quantityValue);
+        newPromotion.setStartAt(new java.sql.Date(startDate.getTime()));
+        newPromotion.setEndAt(new java.sql.Date(endDate.getTime()));
+
+        if (checkoutValidPromotion(newPromotion)) {
+            boolean added = promotionDAO.add(newPromotion);
+
+            if (added) {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadData();
+                resetForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnAddPromotionActionPerformed
+
+    private void btnDeletePromotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePromotionActionPerformed
+        if (selectedRowIndex != -1) {
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    "Bạn có chắc chắn muốn xóa không?",
+                    "Xác nhận xóa",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    new String[]{"Có", "Không"},
+                    "Có"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
+                Promotion selectedPromotion = promotions.get(selectedRowIndex);
+                int promotionId = selectedPromotion.getPromotionId();
+                boolean isDeleted = promotionDAO.delete((long) promotionId);
+                if (isDeleted) {
+                    loadData();
+                    resetForm();
+                    JOptionPane.showMessageDialog(this, "Xóa khuyến mãi thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể xóa khuyến mãi.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khuyến mãi để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeletePromotionActionPerformed
+
+    private void btnUpdatePromotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePromotionActionPerformed
+        if (selectedRowIndex != -1) {
+            String discountCode = txtDiscountCode.getText();
+            String quantity = txtQuantity.getText();
+            String discountRateStr = txtDiscountRate.getText();
+            Date startDate = dateStart.getDate();
+            Date endDate = dateEnd.getDate();
+
+            if (discountCode.isEmpty() || discountRateStr.isEmpty() || startDate == null || endDate == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khuyến mãi.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int discountRate = 1;
+            int quantityValue = 1;
+            try {
+                quantityValue = Integer.parseInt(quantity);
+                discountRate = Integer.parseInt(discountRateStr);
+                if (discountRate < 1 || discountRate > 99) {
+                    JOptionPane.showMessageDialog(this, "Tỷ lệ giảm giá phải từ 1% đến 99%.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    txtDiscountCode.requestFocus();
+                    return;
+                }
+                if (quantityValue < 1) {
+                    JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 1", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    txtQuantity.requestFocus();
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Tỷ lệ và số lượng phải là số", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (endDate.before(startDate)) {
+                JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            Promotion selectedPromotion = promotions.get(selectedRowIndex);
+            selectedPromotion.setDiscountCode(discountCode);
+            selectedPromotion.setDiscountRate(discountRate);
+            selectedPromotion.setQuantity(quantityValue);
+            selectedPromotion.setStartAt(new java.sql.Date(startDate.getTime()));
+            selectedPromotion.setEndAt(new java.sql.Date(endDate.getTime()));
+
+            if (checkoutValidPromotion(selectedPromotion)) {
+                boolean updated = promotionDAO.update(selectedPromotion);
+
+                if (updated) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật khuyến mãi thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                    resetForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhật khuyến mãi thất bại.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khuyến mãi để cập nhật.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdatePromotionActionPerformed
+
+    private void tablePromotionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePromotionsMouseClicked
+        selectedRowIndex = tablePromotions.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            btnDeletePromotion.setEnabled(true);
+            btnUpdatePromotion.setEnabled(true);
+            Promotion selectedPromotion = promotions.get(selectedRowIndex);
+            txtDiscountCode.setText(selectedPromotion.getDiscountCode());
+            txtDiscountRate.setText(String.valueOf(selectedPromotion.getDiscountRate()));
+            txtQuantity.setText(String.valueOf(selectedPromotion.getQuantity()));
+            dateStart.setDate(selectedPromotion.getStartAt());
+            dateEnd.setDate(selectedPromotion.getEndAt());
+        }
+    }//GEN-LAST:event_tablePromotionsMouseClicked
+
+    private boolean checkoutValidPromotion(Promotion promotion) {
+        promotions = promotionDAO.findAll();
+
+        for (Promotion pm : promotions) {
+            if (pm.getDiscountCode().equals(promotion.getDiscountCode()) && pm.getPromotionId() != promotion.getPromotionId()) {
+                JOptionPane.showMessageDialog(this, "Mã giảm giá đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                txtDiscountCode.requestFocus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void resetForm() {
+        txtSearchPromotion.setText("");
+        txtDiscountCode.setText("");
+        txtDiscountRate.setText("");
+        txtQuantity.setText("");
+        dateStart.setDate(null);
+        dateEnd.setDate(null);
+        tablePromotions.clearSelection();
+        btnUpdatePromotion.setEnabled(false);
+        btnDeletePromotion.setEnabled(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddPromotion;
+    private javax.swing.JButton btnDeletePromotion;
+    private javax.swing.JButton btnRefreshPromotion;
+    private javax.swing.JButton btnUpdatePromotion;
+    private com.toedter.calendar.JDateChooser dateEnd;
+    private com.toedter.calendar.JDateChooser dateStart;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
@@ -443,10 +659,10 @@ public class PromotionManagementPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTable tablePromotions;
+    private javax.swing.JTextField txtDiscountCode;
+    private javax.swing.JTextField txtDiscountRate;
+    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTextField txtSearchPromotion;
     // End of variables declaration//GEN-END:variables
 }

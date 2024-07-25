@@ -8,11 +8,19 @@ public class Bill {
     private int totalPrice;
     private Date payAt;
     private int clientId;
-    private int promotionId;
     private int employeeId;
+    private double discount;
 
     public int getBillId() {
         return billId;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public void setBillId(int billId) {
@@ -41,14 +49,6 @@ public class Bill {
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
-    }
-
-    public int getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
     }
 
     public int getEmployeeId() {

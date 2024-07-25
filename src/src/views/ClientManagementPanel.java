@@ -1,16 +1,20 @@
 package src.views;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.DAOs.clients.ClientDAO;
 import src.DAOs.clients.IClientDAO;
 import src.models.Client;
+import src.validates.Validator;
 
 public class ClientManagementPanel extends javax.swing.JPanel {
 
     private List<Client> clients;
 
     private IClientDAO clientDAO;
+
+    private int selectedRowIndex = -1;
 
     public ClientManagementPanel() {
         initComponents();
@@ -54,11 +58,11 @@ public class ClientManagementPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        txtNameClient = new javax.swing.JTextField();
+        txtPhoneClient = new javax.swing.JTextField();
+        txtAddressClient = new javax.swing.JTextField();
+        txtEmailClient = new javax.swing.JTextField();
+        cbGenderClient = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtSearchClient = new javax.swing.JTextField();
@@ -67,10 +71,10 @@ public class ClientManagementPanel extends javax.swing.JPanel {
         tableClients = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnDeleteClient = new javax.swing.JButton();
+        btnAddClient = new javax.swing.JButton();
+        btnUpdateClient = new javax.swing.JButton();
+        btnRefreshClient = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -130,16 +134,16 @@ public class ClientManagementPanel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(235, 227, 227));
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtNameClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtPhoneClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jTextField3.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtAddressClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jTextField4.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtEmailClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
+        cbGenderClient.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cbGenderClient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -148,26 +152,26 @@ public class ClientManagementPanel extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 186, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(cbGenderClient, javax.swing.GroupLayout.Alignment.LEADING, 0, 186, Short.MAX_VALUE)
+                    .addComponent(txtPhoneClient, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEmailClient, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAddressClient, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNameClient, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPhoneClient, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmailClient, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbGenderClient, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAddressClient, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(109, Short.MAX_VALUE))
         );
 
@@ -259,6 +263,11 @@ public class ClientManagementPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tableClients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableClientsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableClients);
         if (tableClients.getColumnModel().getColumnCount() > 0) {
             tableClients.getColumnModel().getColumn(4).setHeaderValue("Giới tính");
@@ -270,23 +279,38 @@ public class ClientManagementPanel extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton2.setText("Xoá");
-        jButton2.setEnabled(false);
-
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton3.setText("Thêm");
-
-        jButton4.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton4.setText("Cập nhật");
-        jButton4.setEnabled(false);
-        jButton4.setPreferredSize(new java.awt.Dimension(72, 27));
-
-        jButton5.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jButton5.setText("Làm mới");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnDeleteClient.setText("Xoá");
+        btnDeleteClient.setEnabled(false);
+        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnDeleteClientActionPerformed(evt);
+            }
+        });
+
+        btnAddClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnAddClient.setText("Thêm");
+        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddClientActionPerformed(evt);
+            }
+        });
+
+        btnUpdateClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnUpdateClient.setText("Cập nhật");
+        btnUpdateClient.setEnabled(false);
+        btnUpdateClient.setPreferredSize(new java.awt.Dimension(72, 27));
+        btnUpdateClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateClientActionPerformed(evt);
+            }
+        });
+
+        btnRefreshClient.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btnRefreshClient.setText("Làm mới");
+        btnRefreshClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshClientActionPerformed(evt);
             }
         });
 
@@ -298,24 +322,24 @@ public class ClientManagementPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDeleteClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUpdateClient, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnRefreshClient, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRefreshClient, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddClient, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpdateClient, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDeleteClient, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -409,19 +433,202 @@ public class ClientManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSearchClientActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnRefreshClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshClientActionPerformed
         loadData();
-        txtSearchClient.setText("");
-    }//GEN-LAST:event_jButton5ActionPerformed
+        resetForm();
+    }//GEN-LAST:event_btnRefreshClientActionPerformed
 
+    private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
+        String name = txtNameClient.getText();
+        String phone = txtPhoneClient.getText();
+        String address = txtAddressClient.getText();
+        String emailText = txtEmailClient.getText();
+        String gender = (String) cbGenderClient.getSelectedItem();
+
+        if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || emailText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!Validator.isValidPhone(phone)) {
+            txtPhoneClient.requestFocus();
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký tự và bắt đầu bằng số 0.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!Validator.isValidEmail(emailText)) {
+            txtEmailClient.requestFocus();
+            JOptionPane.showMessageDialog(this, "Email không hợp lệ. Email phải có định dạng như 'example@domain.com'.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Client newClient = new Client();
+        newClient.setName(name);
+        newClient.setPhone(phone);
+        newClient.setAddress(address);
+        newClient.setEmail(emailText);
+        newClient.setGender(gender.equals("Nam"));
+        if (checkoutValidClient(newClient)) {
+            boolean added = clientDAO.add(newClient);
+
+            if (added) {
+                JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadData();
+                resetForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm khách hàng thất bại.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnAddClientActionPerformed
+
+    private void btnUpdateClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateClientActionPerformed
+        if (selectedRowIndex != -1) {
+            String name = txtNameClient.getText();
+            String phone = txtPhoneClient.getText();
+            String address = txtAddressClient.getText();
+            String emailText = txtEmailClient.getText();
+            String gender = (String) cbGenderClient.getSelectedItem();
+
+            if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || emailText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!Validator.isValidPhone(phone)) {
+                txtPhoneClient.requestFocus();
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký tự và bắt đầu bằng số 0.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!Validator.isValidEmail(emailText)) {
+                txtEmailClient.requestFocus();
+                JOptionPane.showMessageDialog(this, "Email không hợp lệ. Email phải có định dạng như 'example@domain.com'.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int clientId = (int) tableClients.getValueAt(selectedRowIndex, 0);
+
+            Client updatedClient = new Client();
+            updatedClient.setClientId(clientId);
+            updatedClient.setName(name);
+            updatedClient.setPhone(phone);
+            updatedClient.setAddress(address);
+            updatedClient.setEmail(emailText);
+            updatedClient.setGender(gender.equals("Nam"));
+            if (checkoutValidClient(updatedClient)) {
+                boolean updated = clientDAO.update(updatedClient);
+
+                if (updated) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật khách hàng thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                    resetForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhật khách hàng thất bại.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để cập nhật.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdateClientActionPerformed
+
+    private boolean checkoutValidClient(Client client) {
+        clients = clientDAO.findAll();
+
+        for (Client c : clients) {
+            boolean isDuplicatePhone = c.getPhone().equals(client.getPhone());
+            boolean isDuplicateEmail = c.getEmail().equals(client.getEmail());
+
+            if ((isDuplicatePhone || isDuplicateEmail) && c.getClientId() != client.getClientId()) {
+                showMessageAndFocus(isDuplicatePhone, isDuplicateEmail);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void showMessageAndFocus(boolean isDuplicatePhone, boolean isDuplicateEmail) {
+        if (isDuplicatePhone) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            txtPhoneClient.requestFocus();
+        } else if (isDuplicateEmail) {
+            JOptionPane.showMessageDialog(this, "Email đã tồn tại.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            txtEmailClient.requestFocus();
+        }
+    }
+
+    private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
+        if (selectedRowIndex != -1) {
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    "Bạn có chắc chắn muốn xóa không?",
+                    "Xác nhận xóa",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    new String[]{"Có", "Không"},
+                    "Có"
+            );
+
+            if (option == JOptionPane.YES_OPTION) {
+                int tourGuideId = (int) tableClients.getValueAt(selectedRowIndex, 0);
+                boolean isDeleted = clientDAO.delete((long) tourGuideId);
+                if (isDeleted) {
+                    loadData();
+                    btnDeleteClient.setEnabled(false);
+                    btnUpdateClient.setEnabled(false);
+                    selectedRowIndex = -1;
+                    JOptionPane.showMessageDialog(this, "Xóa khách hàng thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    resetForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không thể xóa khách hàng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnDeleteClientActionPerformed
+
+    private void tableClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientsMouseClicked
+        selectedRowIndex = tableClients.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            btnDeleteClient.setEnabled(true);
+            btnUpdateClient.setEnabled(true);
+
+            String name = (String) tableClients.getValueAt(selectedRowIndex, 1);
+            String phone = (String) tableClients.getValueAt(selectedRowIndex, 2);
+            String email = (String) tableClients.getValueAt(selectedRowIndex, 3);
+            String gender = (String) tableClients.getValueAt(selectedRowIndex, 4);
+            String address = (String) tableClients.getValueAt(selectedRowIndex, 5);
+
+            txtNameClient.setText(name);
+            txtPhoneClient.setText(phone);
+            txtAddressClient.setText(address);
+            txtEmailClient.setText(email);
+            cbGenderClient.setSelectedItem(gender);
+        } else {
+            btnDeleteClient.setEnabled(false);
+            btnUpdateClient.setEnabled(false);
+        }
+    }//GEN-LAST:event_tableClientsMouseClicked
+
+    private void resetForm() {
+        txtSearchClient.setText("");
+        txtNameClient.setText("");
+        txtPhoneClient.setText("");
+        txtAddressClient.setText("");
+        txtEmailClient.setText("");
+        cbGenderClient.setSelectedIndex(0);
+        selectedRowIndex = -1;
+        btnDeleteClient.setEnabled(false);
+        btnUpdateClient.setEnabled(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddClient;
+    private javax.swing.JButton btnDeleteClient;
+    private javax.swing.JButton btnRefreshClient;
     private javax.swing.JButton btnSearchClient;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnUpdateClient;
+    private javax.swing.JComboBox<String> cbGenderClient;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
@@ -439,11 +646,11 @@ public class ClientManagementPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tableClients;
+    private javax.swing.JTextField txtAddressClient;
+    private javax.swing.JTextField txtEmailClient;
+    private javax.swing.JTextField txtNameClient;
+    private javax.swing.JTextField txtPhoneClient;
     private javax.swing.JTextField txtSearchClient;
     // End of variables declaration//GEN-END:variables
 }

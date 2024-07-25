@@ -5,7 +5,6 @@ public class BillDetail {
     private int billDetailId;
     private int quantity;
     private int unitPrice;
-    private long totalPrice;
     private int tourId;
     private int billId;
 
@@ -31,14 +30,6 @@ public class BillDetail {
 
     public void setUnitPrice(int unitPrice) {
         this.unitPrice = unitPrice;
-    }
-
-    public long getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(long totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public int getTourId() {

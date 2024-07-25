@@ -25,12 +25,12 @@ public class BillDAO implements IBillDAO {
 
     @Override
     public boolean add(Bill bill) {
-        String query = "INSERT INTO bills (total_price, pay_at, client_id, promotio_id, employee_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO bills (total_price, pay_at, client_id, discount, employee_id) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, bill.getTotalPrice());
             preparedStatement.setDate(2, bill.getPayAt());
             preparedStatement.setInt(3, bill.getClientId());
-            preparedStatement.setInt(4, bill.getPromotionId());
+            preparedStatement.setDouble(4, bill.getDiscount());
             preparedStatement.setInt(5, bill.getEmployeeId());
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -50,12 +50,12 @@ public class BillDAO implements IBillDAO {
 
     @Override
     public boolean update(Bill bill) {
-        String query = "UPDATE bills SET total_price = ?, pay_at = ?, client_id = ?, promotio_id = ?, employee_id = ? WHERE bill_id = ?";
+        String query = "UPDATE bills SET total_price = ?, pay_at = ?, client_id = ?, discount = ?, employee_id = ? WHERE bill_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, bill.getTotalPrice());
             preparedStatement.setDate(2, bill.getPayAt());
             preparedStatement.setInt(3, bill.getClientId());
-            preparedStatement.setInt(4, bill.getPromotionId());
+            preparedStatement.setDouble(4, bill.getDiscount());
             preparedStatement.setInt(5, bill.getEmployeeId());
             preparedStatement.setInt(6, bill.getBillId());
             return preparedStatement.executeUpdate() > 0;
@@ -89,7 +89,7 @@ public class BillDAO implements IBillDAO {
                     bill.setTotalPrice(resultSet.getInt("total_price"));
                     bill.setPayAt(resultSet.getDate("pay_at"));
                     bill.setClientId(resultSet.getInt("client_id"));
-                    bill.setPromotionId(resultSet.getInt("promotion_id"));
+                    bill.setDiscount(resultSet.getDouble("discount"));
                     bill.setEmployeeId(resultSet.getInt("employee_id"));
                     bills.add(bill);
                 }

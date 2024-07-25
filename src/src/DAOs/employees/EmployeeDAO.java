@@ -32,20 +32,29 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public boolean add(Employee employee) {
-        String query = "INSERT INTO employees (name, phone, email, password, age, gender, address, username, role, status) "
+        String query = "INSERT INTO employees (name, phone, email, password, birthday, gender, address, username, role, status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return executeUpdate(query, employee.getName(), employee.getPhone(), employee.getEmail(), employee.getPassword(),
-                employee.getAge(), employee.isGender(), employee.getAddress(), employee.getUsername(),
+                employee.getBirthday(), employee.isGender(), employee.getAddress(), employee.getUsername(),
                 employee.getRole(), employee.getStatus());
     }
 
     @Override
     public boolean update(Employee employee) {
-        String query = "UPDATE employees SET name = ?, phone = ?, email = ?, password = ?, age = ?, gender = ?, "
-                + "address = ?, username = ?, role = ?, status = ? WHERE employee_id = ?";
-        return executeUpdate(query, employee.getName(), employee.getPhone(), employee.getEmail(), employee.getPassword(),
-                employee.getAge(), employee.isGender(), employee.getAddress(), employee.getUsername(),
-                employee.getRole(), employee.getStatus(), employee.getEmployeeId());
+        String query;
+        if ("".equals(employee.getPassword())) {
+            query = "UPDATE employees SET name = ?, phone = ?, email = ?, birthday = ?, gender = ?, "
+                    + "address = ?, username = ?, role = ?, status = ? WHERE employee_id = ?";
+            return executeUpdate(query, employee.getName(), employee.getPhone(), employee.getEmail(),
+                    employee.getBirthday(), employee.isGender(), employee.getAddress(), employee.getUsername(),
+                    employee.getRole(), employee.getStatus(), employee.getEmployeeId());
+        } else {
+            query = "UPDATE employees SET name = ?, phone = ?, email = ?, password = ?, birthday = ?, gender = ?, "
+                    + "address = ?, username = ?, role = ?, status = ? WHERE employee_id = ?";
+            return executeUpdate(query, employee.getName(), employee.getPhone(), employee.getEmail(), employee.getPassword(),
+                    employee.getBirthday(), employee.isGender(), employee.getAddress(), employee.getUsername(),
+                    employee.getRole(), employee.getStatus(), employee.getEmployeeId());
+        }
     }
 
     @Override
@@ -96,7 +105,7 @@ public class EmployeeDAO implements IEmployeeDAO {
         employee.setPhone(resultSet.getString("phone"));
         employee.setEmail(resultSet.getString("email"));
         employee.setPassword(resultSet.getString("password"));
-        employee.setAge(resultSet.getInt("age"));
+        employee.setBirthday(resultSet.getDate("birthday"));
         employee.setGender(resultSet.getBoolean("gender"));
         employee.setAddress(resultSet.getString("address"));
         employee.setUsername(resultSet.getString("username"));

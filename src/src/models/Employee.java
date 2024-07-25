@@ -1,5 +1,7 @@
 package src.models;
 
+import java.util.Date;
+
 public class Employee {
 
     private int employeeId;
@@ -7,7 +9,7 @@ public class Employee {
     private String phone;
     private String email;
     private String password;
-    private int age;
+    private Date birthday;
     private boolean gender;
     private String address;
     private String username;
@@ -54,12 +56,12 @@ public class Employee {
         this.password = password;
     }
 
-    public int getAge() {
-        return age;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public boolean isGender() {

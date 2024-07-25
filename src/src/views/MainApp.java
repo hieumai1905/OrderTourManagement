@@ -7,9 +7,19 @@ import javax.swing.JOptionPane;
 
 public class MainApp extends javax.swing.JFrame {
 
-    public MainApp() {
+    public MainApp(boolean isAdmin) {
         initComponents();
         setLocationRelativeTo(null);
+        setSiderBar(isAdmin);
+    }
+
+    private void setSiderBar(boolean isAdmin) {
+        if (!isAdmin) {
+            pnSideBar.remove(btnHome);
+            pnSideBar.remove(btnPromotionManage);
+            pnSideBar.remove(btnEmployeeManage);
+            // them panel cua tour vào đây
+        }
         MainPanel mainPanelContent = new MainPanel();
         setMainPanelLayout(mainPanelContent);
     }
@@ -18,14 +28,13 @@ public class MainApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnSideBar = new javax.swing.JPanel();
         btnHome = new javax.swing.JButton();
         btnTourManage = new javax.swing.JButton();
         btnEmployeeManage = new javax.swing.JButton();
         btnClientManage = new javax.swing.JButton();
         btnTourGuidMange = new javax.swing.JButton();
         btnBillMange = new javax.swing.JButton();
-        btnHotelMange = new javax.swing.JButton();
         btnTouristAttracionMange = new javax.swing.JButton();
         btnPromotionManage = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
@@ -43,15 +52,15 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setAlignmentX(0.0F);
-        jPanel1.setAlignmentY(0.0F);
-        jPanel1.setPreferredSize(new java.awt.Dimension(150, 750));
+        pnSideBar.setBackground(new java.awt.Color(236, 236, 236));
+        pnSideBar.setAlignmentX(0.0F);
+        pnSideBar.setAlignmentY(0.0F);
+        pnSideBar.setPreferredSize(new java.awt.Dimension(150, 750));
 
         btnHome.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnHome.setText("Trang chủ");
         btnHome.setAlignmentY(0.0F);
-        btnHome.setBorder(null);
+        btnHome.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnHome.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,13 +71,13 @@ public class MainApp extends javax.swing.JFrame {
         btnTourManage.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnTourManage.setText("Quản lý tour");
         btnTourManage.setAlignmentY(0.0F);
-        btnTourManage.setBorder(null);
+        btnTourManage.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnTourManage.setInheritsPopupMenu(true);
         btnTourManage.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
         btnEmployeeManage.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnEmployeeManage.setText("Quản lý nhân viên");
-        btnEmployeeManage.setBorder(null);
+        btnEmployeeManage.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnEmployeeManage.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnEmployeeManage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +87,7 @@ public class MainApp extends javax.swing.JFrame {
 
         btnClientManage.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnClientManage.setText("Quản lý khách hàng");
-        btnClientManage.setBorder(null);
+        btnClientManage.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnClientManage.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnClientManage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +99,7 @@ public class MainApp extends javax.swing.JFrame {
         btnTourGuidMange.setText("Quản lý hướng dẫn viên");
         btnTourGuidMange.setToolTipText("");
         btnTourGuidMange.setAlignmentY(0.0F);
-        btnTourGuidMange.setBorder(null);
+        btnTourGuidMange.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnTourGuidMange.setInheritsPopupMenu(true);
         btnTourGuidMange.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnTourGuidMange.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +110,7 @@ public class MainApp extends javax.swing.JFrame {
 
         btnBillMange.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnBillMange.setText("Quản lý hoá đơn");
-        btnBillMange.setBorder(null);
+        btnBillMange.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnBillMange.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnBillMange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,22 +118,22 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        btnHotelMange.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
-        btnHotelMange.setText("Quản lý khách sạn");
-        btnHotelMange.setBorder(null);
-        btnHotelMange.setMargin(new java.awt.Insets(0, 0, 0, 0));
-
         btnTouristAttracionMange.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnTouristAttracionMange.setText("Quản lý điểm du lịch");
         btnTouristAttracionMange.setToolTipText("");
         btnTouristAttracionMange.setAlignmentY(0.0F);
-        btnTouristAttracionMange.setBorder(null);
+        btnTouristAttracionMange.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnTouristAttracionMange.setInheritsPopupMenu(true);
         btnTouristAttracionMange.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnTouristAttracionMange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTouristAttracionMangeActionPerformed(evt);
+            }
+        });
 
         btnPromotionManage.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btnPromotionManage.setText("Quản lý giảm giá");
-        btnPromotionManage.setBorder(null);
+        btnPromotionManage.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnPromotionManage.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnPromotionManage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +145,7 @@ public class MainApp extends javax.swing.JFrame {
         btnLogout.setText("Đăng xuất");
         btnLogout.setToolTipText("");
         btnLogout.setAlignmentY(0.0F);
-        btnLogout.setBorder(null);
+        btnLogout.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 242, 242), null));
         btnLogout.setInheritsPopupMenu(true);
         btnLogout.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -145,24 +154,23 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnSideBarLayout = new javax.swing.GroupLayout(pnSideBar);
+        pnSideBar.setLayout(pnSideBarLayout);
+        pnSideBarLayout.setHorizontalGroup(
+            pnSideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnEmployeeManage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnBillMange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnTourGuidMange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnTourGuidMange, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
             .addComponent(btnClientManage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnTourManage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPromotionManage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnTouristAttracionMange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnHotelMange, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnSideBarLayout.setVerticalGroup(
+            pnSideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSideBarLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,10 +188,8 @@ public class MainApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTouristAttracionMange, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHotelMange, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         mainPanel.setBackground(new java.awt.Color(204, 255, 255));
@@ -199,32 +205,36 @@ public class MainApp extends javax.swing.JFrame {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel2.setBackground(new java.awt.Color(102, 153, 255));
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 120));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("Icon and name");
+        jLabel1.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icons/icon.png"))); // NOI18N
+        jLabel1.setText("Nhóm 8");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(19, 19, 19))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel1)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,16 +244,16 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                    .addComponent(pnSideBar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1154, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnSideBar, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -304,6 +314,11 @@ public class MainApp extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addWindowClosingListener
 
+    private void btnTouristAttracionMangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTouristAttracionMangeActionPerformed
+        TouristAttractionManagementPanel touristAttractionManagementPanel = new TouristAttractionManagementPanel();
+        setMainPanelLayout(touristAttractionManagementPanel);
+    }//GEN-LAST:event_btnTouristAttracionMangeActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -316,7 +331,7 @@ public class MainApp extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(() -> {
-            new MainApp().setVisible(true);
+            new MainApp(true).setVisible(true);
         });
     }
 
@@ -344,15 +359,14 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton btnClientManage;
     private javax.swing.JButton btnEmployeeManage;
     private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnHotelMange;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPromotionManage;
     private javax.swing.JButton btnTourGuidMange;
     private javax.swing.JButton btnTourManage;
     private javax.swing.JButton btnTouristAttracionMange;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel pnSideBar;
     // End of variables declaration//GEN-END:variables
 }

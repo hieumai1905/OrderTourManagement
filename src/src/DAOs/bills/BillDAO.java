@@ -4,6 +4,8 @@ import src.models.Bill;
 import src.DAOs.ConnectDatabase;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,5 +100,68 @@ public class BillDAO implements IBillDAO {
             System.out.println("Error when executing query for finding all bills");
         }
         return bills;
+    }
+
+    @Override
+    public long statisticalDay(String date) {
+        long totalRevenue = 0;
+        String query = "SELECT SUM(total_price) AS total_revenue FROM bills WHERE CONVERT(date, pay_at) = CONVERT(date, ?)";
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = null;
+        try {
+            java.util.Date utilDate = format.parse(date);
+            sqlDate = new java.sql.Date(utilDate.getTime());
+        } catch (ParseException e) {
+            System.out.println("Error parsing date: " + e.getMessage());
+            return totalRevenue;
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, sqlDate);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalRevenue = resultSet.getLong("total_revenue");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error when executing query for daily revenue statistics: " + e.getMessage());
+        }
+        return totalRevenue;
+    }
+
+    @Override
+    public long statisticalMonth(int year, int month) {
+        long totalRevenue = 0;
+        String query = "SELECT SUM(total_price) AS total_revenue FROM bills WHERE YEAR(pay_at) = ? AND MONTH(pay_at) = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, year);
+            preparedStatement.setInt(2, month);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalRevenue = resultSet.getLong("total_revenue");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error when executing query for monthly revenue statistics");
+        }
+        return totalRevenue;
+    }
+
+    @Override
+    public long statisticalYear(int year) {
+        long totalRevenue = 0;
+        String query = "SELECT SUM(total_price) AS total_revenue FROM bills WHERE YEAR(pay_at) = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, year);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalRevenue = resultSet.getLong("total_revenue");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error when executing query for yearly revenue statistics");
+        }
+        return totalRevenue;
     }
 }

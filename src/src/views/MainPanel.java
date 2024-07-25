@@ -1,9 +1,58 @@
 package src.views;
 
+import java.text.NumberFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import src.DAOs.bills.BillDAO;
+import src.DAOs.bills.IBillDAO;
+
 public class MainPanel extends javax.swing.JPanel {
+
+    private IBillDAO billDAO;
+    private static long revenueDay = 0, revenueMonth = 0, revenueYear = 0;
 
     public MainPanel() {
         initComponents();
+        loadData();
+    }
+
+    private void loadData() {
+        billDAO = BillDAO.getInstance();
+        revenueDay = billDAO.statisticalDay(getCurrentDate());
+        revenueMonth = billDAO.statisticalMonth(getCurrentYear(), getCurrentMonth());
+        revenueYear = billDAO.statisticalYear(getCurrentYear());
+        setRevenue();
+        setTourCount();
+    }
+
+    private String getCurrentDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateStr = formatter.format(new Date());
+        return currentDateStr;
+    }
+
+    private int getCurrentMonth() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+
+    private int getCurrentYear() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    private void setTourCount() {
+        lbTourCountActive.setText("tour count");
+    }
+
+    private void setRevenue() {
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+
+        lbRevenueDay.setText(numberFormat.format(revenueDay) + " VND");
+        lbRevenueMonth.setText(numberFormat.format(revenueMonth) + " VND");
+        lbRevenueYear.setText(numberFormat.format(revenueYear) + " VND");
     }
 
     @SuppressWarnings("unchecked")
@@ -13,19 +62,19 @@ public class MainPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lbRevenueDay = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lbRevenueMonth = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lbRevenueYear = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lbTourCountActive = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -37,8 +86,8 @@ public class MainPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Doanh thu ngày");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
-        jLabel2.setText("100000 VND");
+        lbRevenueDay.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        lbRevenueDay.setText("100000 VND");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel3.setText("Tổng tiền");
@@ -50,7 +99,7 @@ public class MainPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(lbRevenueDay)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
                 .addContainerGap(108, Short.MAX_VALUE))
@@ -63,7 +112,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(lbRevenueDay)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -73,8 +122,8 @@ public class MainPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel4.setText("Doanh thu tháng");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
-        jLabel5.setText("100000 VND");
+        lbRevenueMonth.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        lbRevenueMonth.setText("100000 VND");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel6.setText("Tổng tiền");
@@ -86,7 +135,7 @@ public class MainPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
+                    .addComponent(lbRevenueMonth)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
                 .addContainerGap(101, Short.MAX_VALUE))
@@ -99,7 +148,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(lbRevenueMonth)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -109,8 +158,8 @@ public class MainPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel10.setText("Doanh thu năm");
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
-        jLabel11.setText("100000 VND");
+        lbRevenueYear.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        lbRevenueYear.setText("100000 VND");
 
         jLabel12.setBackground(new java.awt.Color(238, 245, 245));
         jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -123,7 +172,7 @@ public class MainPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
+                    .addComponent(lbRevenueYear)
                     .addComponent(jLabel10)
                     .addComponent(jLabel12))
                 .addContainerGap(111, Short.MAX_VALUE))
@@ -136,7 +185,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(lbRevenueYear)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -146,8 +195,8 @@ public class MainPanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel7.setText("Tour đang hoạt động");
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
-        jLabel9.setText("1000");
+        lbTourCountActive.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        lbTourCountActive.setText("1000");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,7 +206,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel9))
+                    .addComponent(lbTourCountActive))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -166,7 +215,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbTourCountActive, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -215,19 +264,19 @@ public class MainPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel lbRevenueDay;
+    private javax.swing.JLabel lbRevenueMonth;
+    private javax.swing.JLabel lbRevenueYear;
+    private javax.swing.JLabel lbTourCountActive;
     // End of variables declaration//GEN-END:variables
 }

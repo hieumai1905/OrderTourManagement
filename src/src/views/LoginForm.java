@@ -186,7 +186,8 @@ public class LoginForm extends javax.swing.JFrame {
             if (employeeLogin != null) {
                 JOptionPane.showMessageDialog(null, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
-                new MainApp().setVisible(true);
+                boolean roleEmployee = employeeLogin.getRole();
+                new MainApp(roleEmployee).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không chính xác!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }

@@ -1,5 +1,6 @@
-![image](https://github.com/user-attachments/assets/044a8b5b-027b-4f16-9729-8ad57f607fda)1. Login
-  ![image](https://github.com/user-attachments/assets/9dfec6b9-805e-4e72-a7d4-267940a96c6b)
+1. Login
+  ![image](https://github.com/user-attachments/assets/8b29c16f-713f-41e5-b490-1bae21eaf8c9)
+
 2. Dashboard
 - MANAGER
   ![image](https://github.com/user-attachments/assets/c5cd9139-d4b0-41f0-aea8-a5f98ff4f736)
